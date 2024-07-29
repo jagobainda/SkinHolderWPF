@@ -106,3 +106,4 @@ yarn-error.log
 # Project specific
 SkinHolderWPF/bin/
 SkinHolderWPF/obj/
+SkinHolderWPF/ApiInfo.cs
