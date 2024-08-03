@@ -7,7 +7,111 @@
         Title="SkinHolder" Height="650" Width="1000"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Window.Resources>
+        <Style x:Key="GridMenuStyle"  TargetType="Grid">
+            <Setter Property="Background" Value="#555555"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#444444">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Name="GridBarraSuperior" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource GridMenuStyle}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                
+
+            </Grid>
+
+            <Label Grid.Column="1" Background="{StaticResource PrimaryBrush}" Margin="0,15,0,15"/>
+
+            <Grid Grid.Column="2" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+
+
+            </Grid>
+
+            <Label Grid.Column="3" Background="{StaticResource PrimaryBrush}" Margin="0, 15, 0, 15"/>
+
+            <Grid Grid.Column="4" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                
+
+            </Grid>
+
+        </Grid>
+
+        <Grid Name="GridBarraMenuIzquierda" Grid.Column="0" Grid.Row="1" Background="#555555">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                
+            </Grid>
+
+            <Label Grid.Row="1" Background="{StaticResource PrimaryBrush}" Margin="20, 0, 20, 0"/>
+
+            <Grid Grid.Row="2">
+                
+            </Grid>
+
+            <Label Grid.Row="3" Background="{StaticResource PrimaryBrush}" Margin="20, 0, 20, 0"/>
+
+            <Grid Grid.Row="4">
+                
+            </Grid>
+
+            <Label Grid.Row="5" Background="{StaticResource PrimaryBrush}" Margin="20, 0, 20, 0"/>
+
+            <Grid Grid.Row="6">
+                
+            </Grid>
+
+        </Grid>
+
+        <ContentControl x:Name="ContenedorUserControl" Grid.Column="1" Grid.Row="1">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" Foreground="Gray">
+                BIENVENIDO A <Run Text="SKINHOLDER" Foreground="{StaticResource PrimaryBrush}"/>
+            </TextBlock>
+        </ContentControl>
 
     </Grid>
 </Window>
