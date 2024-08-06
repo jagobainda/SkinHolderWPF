@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="bin\Debug\net8.0-windows\Images\icono.png" />
+    <Content Include="bin\Release\net8.0-windows\Images\icono.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>

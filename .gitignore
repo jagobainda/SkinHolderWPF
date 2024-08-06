@@ -107,3 +107,4 @@ yarn-error.log
 SkinHolderWPF/bin/
 SkinHolderWPF/obj/
 SkinHolderWPF/ApiInfo.cs
+SkinHolderWPF/Enums/Api/

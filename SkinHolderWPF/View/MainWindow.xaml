@@ -8,9 +8,34 @@
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
+
         <Style x:Key="GridMenuStyle"  TargetType="Grid">
             <Setter Property="Background" Value="#555555"/>
         </Style>
+
+        <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Gray"/>
+        </Style>
+        
+        <Style x:Key="TopMenuTitleTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Gray"/>
+        </Style>
+        
+        <Style x:Key="TopMenuTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
     </Window.Resources>
 
     <Grid Background="#444444">
@@ -41,7 +66,26 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                
+                <TextBlock Style="{StaticResource TopMenuTitleTextBlockStyle}">
+                    <Run Text="CONEXIÓN CON SKINHOLDERDB" Foreground="{StaticResource PrimaryBrush}"/>
+                </TextBlock>
+
+                <Grid Grid.Row="1">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource TopMenuTextBlockStyle}">
+                        ESTADO: <Run Name="EstadoConSkinHolderDb"/> 
+                    </TextBlock>
+
+                    <TextBlock Grid.Column="1" Style="{StaticResource TopMenuTextBlockStyle}">
+                        PING: <Run Name="SkinHolderDbConnectionPing"/> ms
+                    </TextBlock>
+
+                </Grid>
 
             </Grid>
 
@@ -53,7 +97,26 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
+                <TextBlock Style="{StaticResource TopMenuTitleTextBlockStyle}">
+                    <Run Text="ÚLTIMO REGISTRO" Foreground="{StaticResource PrimaryBrush}"/>
+                </TextBlock>
 
+                <Grid Grid.Row="1">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource TopMenuTextBlockStyle}">
+                        STEAM: <Run Name="SteamLast"/> €
+                    </TextBlock>
+
+                    <TextBlock Grid.Column="1" Style="{StaticResource TopMenuTextBlockStyle}">
+                        GAMERPAY: <Run Name="GamerPayLast"/> €
+                    </TextBlock>
+
+                </Grid>
 
             </Grid>
 
@@ -65,7 +128,26 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
+                <TextBlock Style="{StaticResource TopMenuTitleTextBlockStyle}">
+                    <Run Text="LATENCIA DE CONEXIÓN" Foreground="{StaticResource PrimaryBrush}"/>
+                </TextBlock>
                 
+                <Grid Grid.Row="1">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource TopMenuTextBlockStyle}">
+                        STEAM: <Run Name="SteamConnectionPing"/> ms
+                    </TextBlock>
+                    
+                    <TextBlock Grid.Column="1" Style="{StaticResource TopMenuTextBlockStyle}">
+                        GAMERPAY: <Run Name="GamerPayConnectionPing"/> ms
+                    </TextBlock>
+
+                </Grid>
 
             </Grid>
 
@@ -108,7 +190,7 @@
         </Grid>
 
         <ContentControl x:Name="ContenedorUserControl" Grid.Column="1" Grid.Row="1">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" Foreground="Gray">
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}">
                 BIENVENIDO A <Run Text="SKINHOLDER" Foreground="{StaticResource PrimaryBrush}"/>
             </TextBlock>
         </ContentControl>
