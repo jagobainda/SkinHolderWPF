@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SkinHolderWPF.Enums.Api;
@@ -31,7 +32,7 @@ public partial class MainWindow
         Task.Run(async () =>
         {
             var c = 0;
-
+            
             while (true)
             {
                 if (c > 4) return;
@@ -74,8 +75,8 @@ public partial class MainWindow
                         EstadoConSkinHolderDb.Foreground = _originalPingForegroundBrush;
                     }));
                 });
-
-                await Task.Delay(10000);
+                
+                await Task.Delay(10000); 
             }
         });
     }
@@ -98,5 +99,10 @@ public partial class MainWindow
                 GamerPayLast.Text = totalGamerPay.ToString("F2");
             });
         });
+    }
+
+    private void BtnRegistrosMenu_Click(object sender, RoutedEventArgs e)
+    {
+        ContenedorUserControl.Content = ContenedorUserControl.Content is RegistrosMenu ? new Bienvenida() : new RegistrosMenu();
     }
 }

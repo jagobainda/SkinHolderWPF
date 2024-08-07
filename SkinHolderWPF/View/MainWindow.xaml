@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="SkinHolder" Height="650" Width="1000"
         ResizeMode="CanMinimize"
@@ -34,6 +35,27 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="ButtonStyleWithBorderRadius" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#444444"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="#B8D600"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="90"/>
+            <Setter Property="Height" Value="90"/>
         </Style>
 
     </Window.Resources>
@@ -166,25 +188,29 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                
+                <Button Style="{StaticResource ButtonStyleWithBorderRadius}" Name="BtnRegistrosMenu" Click="BtnRegistrosMenu_Click">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <fa:ImageAwesome Icon="Book" Width="40" Height="40" Foreground="{StaticResource PrimaryBrush}"/>
+                    </StackPanel>
+                </Button>
             </Grid>
 
             <Label Grid.Row="1" Background="{StaticResource PrimaryBrush}" Margin="20, 0, 20, 0"/>
 
             <Grid Grid.Row="2">
-                
+                <Button Style="{StaticResource ButtonStyleWithBorderRadius}"/>
             </Grid>
 
             <Label Grid.Row="3" Background="{StaticResource PrimaryBrush}" Margin="20, 0, 20, 0"/>
 
             <Grid Grid.Row="4">
-                
+                <Button Style="{StaticResource ButtonStyleWithBorderRadius}"/>
             </Grid>
 
             <Label Grid.Row="5" Background="{StaticResource PrimaryBrush}" Margin="20, 0, 20, 0"/>
 
             <Grid Grid.Row="6">
-                
+                <Button Style="{StaticResource ButtonStyleWithBorderRadius}"/>
             </Grid>
 
         </Grid>
