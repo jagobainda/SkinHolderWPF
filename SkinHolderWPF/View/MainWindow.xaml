@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="SkinHolder" Height="650" Width="1000"
+        Title="SkinHolder"
+        Height="650"
+        Width="1000"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -14,22 +16,6 @@
             <Setter Property="Background" Value="#555555"/>
         </Style>
 
-        <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="30"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="Gray"/>
-        </Style>
-        
-        <Style x:Key="TopMenuTitleTextBlockStyle" TargetType="TextBlock">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="Gray"/>
-        </Style>
-        
         <Style x:Key="TopMenuTextBlockStyle" TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -198,7 +184,11 @@
             <Label Grid.Row="1" Background="{StaticResource PrimaryBrush}" Margin="20, 0, 20, 0"/>
 
             <Grid Grid.Row="2">
-                <Button Style="{StaticResource ButtonStyleWithBorderRadius}"/>
+                <Button Style="{StaticResource ButtonStyleWithBorderRadius}" Name="BtnItemsMenu" Click="BtnItemsMenu_Click">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <fa:ImageAwesome Icon="List" Width="40" Height="40" Foreground="{StaticResource PrimaryBrush}"/>
+                    </StackPanel>
+                </Button>
             </Grid>
 
             <Label Grid.Row="3" Background="{StaticResource PrimaryBrush}" Margin="20, 0, 20, 0"/>
@@ -210,7 +200,11 @@
             <Label Grid.Row="5" Background="{StaticResource PrimaryBrush}" Margin="20, 0, 20, 0"/>
 
             <Grid Grid.Row="6">
-                <Button Style="{StaticResource ButtonStyleWithBorderRadius}"/>
+                <Button Style="{StaticResource ButtonStyleWithBorderRadius}" Name="BtnExit" Click="BtnExit_Click">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <fa:ImageAwesome Icon="SignOut" Width="40" Height="40" Foreground="{StaticResource PrimaryBrush}"/>
+                    </StackPanel>
+                </Button>
             </Grid>
 
         </Grid>

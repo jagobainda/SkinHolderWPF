@@ -4,6 +4,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SkinHolderWPF.Enums.Api;
 using SkinHolderWPF.Utils;
+using SkinHolderWPF.ViewModel;
 
 namespace SkinHolderWPF.View;
 
@@ -90,13 +91,16 @@ public partial class MainWindow
             using var registroDoc = JsonDocument.Parse(registroJson);
             var json = registroDoc.RootElement;
 
-            var totalSteam = json.GetProperty("totalSteam").GetDouble();
-            var totalGamerPay = json.GetProperty("totalGamerPay").GetDouble();
+            PreciosViewModel preciosViewModel = new()
+            {
+                PrecioSteam = json.GetProperty("totalSteam").GetDouble(),
+                PrecioGamerPay = json.GetProperty("totalGamerPay").GetDouble()
+            };
 
             Dispatcher.Invoke(() =>
             {
-                SteamLast.Text = totalSteam.ToString("F2");
-                GamerPayLast.Text = totalGamerPay.ToString("F2");
+                SteamLast.Text = preciosViewModel.PrecioSteam.Value.ToString("F2");
+                GamerPayLast.Text = preciosViewModel.PrecioGamerPay.Value.ToString("F2");
             });
         });
     }
@@ -104,5 +108,15 @@ public partial class MainWindow
     private void BtnRegistrosMenu_Click(object sender, RoutedEventArgs e)
     {
         ContenedorUserControl.Content = ContenedorUserControl.Content is RegistrosMenu ? new Bienvenida() : new RegistrosMenu();
+    }
+
+    private void BtnItemsMenu_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void BtnExit_Click(object sender, RoutedEventArgs e)
+    {
+        Application.Current.Shutdown();
     }
 }

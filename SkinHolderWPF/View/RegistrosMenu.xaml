@@ -9,30 +9,140 @@
              Background="#444444">
 
     <UserControl.Resources>
-        <Style x:Key="RoundedPanelStyle" TargetType="Border">
-            <Setter Property="CornerRadius" Value="10"/>
-            <Setter Property="Background" Value="#333333"/>
-            <Setter Property="Margin" Value="30"/>
+
+        <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Gray"/>
+        </Style>
+
+        <Style x:Key="ProgressBarRegistros" TargetType="ProgressBar">
+            <Setter Property="Margin" Value="22"/>
+            <Setter Property="Minimum" Value="0"/>
+            <Setter Property="Maximum" Value="100"/>
         </Style>
     </UserControl.Resources>
 
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="0" Style="{StaticResource RoundedPanelStyle}">
-            <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource RoundedPanelStyle}" Margin="30 30 30 15">
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
+                    TOTAL: <Run Text="0" Name="SteamTotal"/> €
+                </TextBlock>
                 
-            </StackPanel>
+                <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
+                    <Run Text="0" Name="SteamProgressPercentage"/> %
+                </TextBlock>
+                
+                <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
+                    <Run Text="0" Name="SteamProgress"/> / 0
+                </TextBlock>
+
+                <ProgressBar Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0" Style="{StaticResource ProgressBarRegistros}" Foreground="{StaticResource SteamBrush}"/>
+
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource RoundedPanelStyle}" Margin="30 15 30 30">
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
+                    TOTAL: <Run Text="0" Name="GamerPayTotal"/> €
+                </TextBlock>
+
+                <TextBlock Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
+                    <Run Text="0" Name="GamerPayProgressPercentage"/> %
+                </TextBlock>
+
+                <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
+                    <Run Text="0" Name="GamerPayProgress"/> / 0
+                </TextBlock>
+
+                <ProgressBar Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0" Style="{StaticResource ProgressBarRegistros}" Foreground="{StaticResource GamerPayBrush}"/>
+
+            </Grid>
         </Border>
         
-        <Border Grid.Column="1" Style="{StaticResource RoundedPanelStyle}">
-            <StackPanel>
+        <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Style="{StaticResource RoundedPanelStyle}">
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="0" Style="{StaticResource ButtonStyleWithBorderRadius}" Name="BtnConsultarSteam">
+                    <TextBlock Style="{StaticResource TitleTextBlockStyle}">
+                        CONSULTAR PRECIO <Run Text="STEAM" Foreground="{StaticResource SteamBrush}"/>
+                    </TextBlock>
+                </Button>
+
+                <Button Grid.Row="1" Style="{StaticResource ButtonStyleWithBorderRadius}" Name="BtnConsultarGamerPay">
+                    <TextBlock Style="{StaticResource TitleTextBlockStyle}">
+                        CONSULTAR PRECIO <Run Text="GAMERPAY" Foreground="{StaticResource GamerPayBrush}"/>
+                    </TextBlock>
+                </Button>
+
+                <Button Grid.Row="2" Style="{StaticResource ButtonStyleWithBorderRadius}">
+                    <TextBlock Style="{StaticResource TitleTextBlockStyle}">
+                        <Run Text="CONSULTAR AMBOS PRECIOS" Foreground="{StaticResource PrimaryBrush}"/>
+                    </TextBlock>
+                </Button>
                 
-            </StackPanel>
+                <Button Grid.Row="3" Style="{StaticResource ButtonStyleWithBorderRadius}">
+                    <TextBlock Style="{StaticResource TitleTextBlockStyle}">
+                        HISTORIAL DE REGISTROS
+                    </TextBlock>
+                </Button>
+                
+                <Button Grid.Row="4" Style="{StaticResource ButtonStyleWithBorderRadius}">
+                    <TextBlock Style="{StaticResource TitleTextBlockStyle}">
+                        EXPORTAR REGISTROS A JSON
+                    </TextBlock>
+                </Button>
+
+            </Grid>
         </Border>
 
     </Grid>
