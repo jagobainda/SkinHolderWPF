@@ -86,7 +86,7 @@ public partial class MainWindow
     {
         Task.Run(async () =>
         {
-            var registroJson = await ApiInfo.GetJsonFromPost(ApiInfo.BaseRegistrosUrl + RegistrosApiMethods.GetLastRegistro, "1");
+            var registroJson = await ApiInfo.GetJsonFromPost(ApiInfo.BaseRegistrosUrl + ERegistrosApiMethods.GetLastRegistro, "1");
 
             using var registroDoc = JsonDocument.Parse(registroJson);
             var json = registroDoc.RootElement;
@@ -111,6 +111,11 @@ public partial class MainWindow
     }
 
     private void BtnItemsMenu_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void BtnUserProfile_Click(object sender, RoutedEventArgs e)
     {
 
     }

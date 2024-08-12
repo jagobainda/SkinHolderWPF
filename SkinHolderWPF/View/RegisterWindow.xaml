@@ -1,0 +1,73 @@
+﻿<Window x:Class="SkinHolderWPF.View.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="SkinHolder - Register"
+        Height="800"
+        Width="600"
+        Background="#444444"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+
+        <Border Grid.Row="1" Style="{StaticResource RoundedPanelStyle}" Margin="40 20 40 40">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="20">
+                    <TextBlock Style="{StaticResource TopMenuTitleTextBlockStyle}">
+                    <Run Text="USUARIO" Foreground="{StaticResource PrimaryBrush}"/>
+                    </TextBlock>
+                    <TextBox Style="{StaticResource TextBoxStyleMenu}" Name="UsernameTextBox"/>
+                </StackPanel>
+
+                <Button Grid.Row="1" Name="GenerarUsuarioButton" Style="{StaticResource ButtonStyleWithBorderRadius}" Margin="40 0" Width="400">
+                    <TextBlock Style="{StaticResource TitleTextBlockStyle}">
+                        <Run Text="GENERAR USUARIO VÁLIDO" Foreground="{StaticResource PrimaryBrush}" FontSize="22"/>
+                    </TextBlock>
+                </Button>
+
+                <StackPanel Grid.Row="2" Margin="20">
+                    <TextBlock Style="{StaticResource TopMenuTitleTextBlockStyle}">
+                    <Run Text="CONTRASEÑA" Foreground="{StaticResource PrimaryBrush}"/>
+                    </TextBlock>
+                    <TextBox Style="{StaticResource TextBoxStyleMenu}" Name="PasswordTextBox"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="3" Margin="20">
+                    <TextBlock Style="{StaticResource TopMenuTitleTextBlockStyle}">
+                    <Run Text="CONFIRMAR CONTRASEÑA" Foreground="{StaticResource PrimaryBrush}"/>
+                    </TextBlock>
+                    <TextBox Style="{StaticResource TextBoxStyleMenu}" Name="PasswordConfirmTextBox"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="4" Orientation="Horizontal">
+                    <Button Name="IniciarSesionButton" Style="{StaticResource ButtonStyleWithBorderRadius}" Margin="40 0" Width="300">
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}">
+                        <Run Text="REGISTRAR USUARIO" Foreground="{StaticResource PrimaryBrush}" FontSize="22"/>
+                        </TextBlock>
+                    </Button>
+
+                    <Button Name="NuevoUsuarioButton" Style="{StaticResource ButtonStyleWithBorderRadius}" Width="60">
+                        <fa:ImageAwesome Icon="User" Width="30" Height="30" Foreground="{StaticResource PrimaryBrush}"/>
+                    </Button>
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+</Window>

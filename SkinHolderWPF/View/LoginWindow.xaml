@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="SkinHolder - Login"
         Height="800"
@@ -10,20 +11,6 @@
         Background="#444444"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <Style x:Key="ButtonRegistrarStyle" TargetType="Button">
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background" Value="Transparent"/>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-    </Window.Resources>
 
     <Grid>
 
@@ -33,7 +20,10 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="40 40 40 20">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">LOGO</TextBlock>
+            <Image Name="Logo"></Image>
+            <TextBlock Style="{StaticResource TopMenuTitleTextBlockStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="30" Margin="30">
+                <Run Text="SKINHOLDER" Foreground="{StaticResource PrimaryBrush}"/>
+            </TextBlock>
         </Grid>
 
         <Border Grid.Row="1" Style="{StaticResource RoundedPanelStyle}" Margin="40 20 40 40">
@@ -43,7 +33,6 @@
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition Height="0.3*"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
@@ -51,27 +40,30 @@
                     <TextBlock Style="{StaticResource TopMenuTitleTextBlockStyle}">
                         <Run Text="USUARIO" Foreground="{StaticResource PrimaryBrush}"/>
                     </TextBlock>
-                    <TextBox Style="{StaticResource TextBoxStyleMenu}" Name="UsernameTextBox"/>
+
+                    <TextBox Style="{StaticResource TextBoxStyleMenu}" Name="UsernameTextBox" KeyDown="TextBox_KeyDown"/>
                 </StackPanel>
-                
+
+                <TextBlock Grid.Row="1" Name="ErrorInicioSesionTextBlock" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="Red"/>
+
                 <StackPanel Grid.Row="1" Margin="20">
                     <TextBlock Style="{StaticResource TopMenuTitleTextBlockStyle}">
                         <Run Text="CONTRASEÑA" Foreground="{StaticResource PrimaryBrush}"/>
                     </TextBlock>
-                    <TextBox Style="{StaticResource TextBoxStyleMenu}" Name="PasswordTextBox"/>
+                    <PasswordBox Style="{StaticResource PasswordBoxStyleMenu}" Name="PasswordTextBox" KeyDown="TextBox_KeyDown"/>
                 </StackPanel>
 
-                <Button Grid.Row="2" Style="{StaticResource ButtonRegistrarStyle}" Name="RegistrarNuevoUsuarioButton" Click="RegistrarNuevoUsuarioButton_Click">
-                    <TextBlock Style="{StaticResource TopMenuTitleTextBlockStyle}">
-                        REGISTRAR NUEVO USUARIO
-                    </TextBlock>
-                </Button>
-
-                <Button Grid.Row="3" Style="{StaticResource ButtonStyleWithBorderRadius}" Margin="70 0">
-                    <TextBlock Style="{StaticResource TitleTextBlockStyle}">
-                        <Run Text="INICIAR SESIÓN" Foreground="{StaticResource PrimaryBrush}" FontSize="22"/>
-                    </TextBlock>
-                </Button>
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <Button Name="IniciarSesionButton" Style="{StaticResource ButtonStyleWithBorderRadius}" Margin="40 0" Width="300" Click="IniciarSesionButton_Click">
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}">
+                            <Run Text="INICIAR SESIÓN" Foreground="{StaticResource PrimaryBrush}" FontSize="22"/>
+                        </TextBlock>
+                    </Button>
+                    
+                    <Button Name="NuevoUsuarioButton" Style="{StaticResource ButtonStyleWithBorderRadius}" Width="60" Click="NuevoUsuarioButton_Click">
+                        <fa:ImageAwesome Icon="UserPlus" Width="30" Height="30" Foreground="{StaticResource PrimaryBrush}"/>
+                    </Button>
+                </StackPanel>
 
             </Grid>
 
