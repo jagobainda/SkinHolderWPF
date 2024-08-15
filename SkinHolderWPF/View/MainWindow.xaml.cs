@@ -28,6 +28,26 @@ public partial class MainWindow
         GetLastRegistroPrecioTotal();
     }
 
+    private void BtnRegistrosMenu_Click(object sender, RoutedEventArgs e)
+    {
+        ContenedorUserControl.Content = ContenedorUserControl.Content is RegistrosMenu ? new Bienvenida() : new RegistrosMenu();
+    }
+
+    private void BtnItemsMenu_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void BtnUserProfile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void BtnExit_Click(object sender, RoutedEventArgs e)
+    {
+        Application.Current.Shutdown();
+    }
+
     private void GetPings()
     {
         Task.Run(async () =>
@@ -103,25 +123,5 @@ public partial class MainWindow
                 GamerPayLast.Text = preciosViewModel.PrecioGamerPay.Value.ToString("F2");
             });
         });
-    }
-
-    private void BtnRegistrosMenu_Click(object sender, RoutedEventArgs e)
-    {
-        ContenedorUserControl.Content = ContenedorUserControl.Content is RegistrosMenu ? new Bienvenida() : new RegistrosMenu();
-    }
-
-    private void BtnItemsMenu_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    private void BtnUserProfile_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    private void BtnExit_Click(object sender, RoutedEventArgs e)
-    {
-        Application.Current.Shutdown();
     }
 }

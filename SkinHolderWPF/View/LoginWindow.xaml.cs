@@ -62,8 +62,11 @@ namespace SkinHolderWPF.View
             {
                 GuardarUsername();
 
-                App.CurrentUsername = UsernameTextBox.Text.Trim();
-                App.CurrentPassword = PasswordTextBox.Password.Trim();
+                App.CurrentUserViewModel = new UserViewModel()
+                {
+                    UserName = UsernameTextBox.Text.Trim(),
+                    Password = PasswordTextBox.Password.Trim()
+                };
 
                 var menuPrincipal = new MainWindow();
                 menuPrincipal.Show();

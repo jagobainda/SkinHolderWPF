@@ -53,7 +53,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
-                    TOTAL: <Run Text="0" Name="SteamTotal"/> €
+                    TOTAL: <Run Text="0" Name="SteamTotal" Foreground="{StaticResource PrimaryBrush}"/> €
                 </TextBlock>
                 
                 <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
@@ -64,7 +64,7 @@
                     <Run Text="0" Name="SteamProgress"/> / 0
                 </TextBlock>
 
-                <ProgressBar Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0" Style="{StaticResource ProgressBarRegistros}" Foreground="{StaticResource SteamBrush}"/>
+                <ProgressBar Name="ProgressBarSteam" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0" Style="{StaticResource ProgressBarRegistros}" Foreground="{StaticResource SteamBrush}"/>
 
             </Grid>
         </Border>
@@ -85,18 +85,22 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
-                    TOTAL: <Run Text="0" Name="GamerPayTotal"/> €
+                    TOTAL: <Run Text="0" Name="GamerPayTotal" Foreground="{StaticResource PrimaryBrush}"/> €
                 </TextBlock>
 
-                <TextBlock Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
+                <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
                     <Run Text="0" Name="GamerPayProgressPercentage"/> %
                 </TextBlock>
-
-                <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
-                    <Run Text="0" Name="GamerPayProgress"/> / 0
+                
+                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="DarkRed" FontSize="20">
+                    NO LISTADOS: <Run Text="0" Name="ItemsNoListados"/>
                 </TextBlock>
 
-                <ProgressBar Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0" Style="{StaticResource ProgressBarRegistros}" Foreground="{StaticResource GamerPayBrush}"/>
+                <TextBlock Name="GamerPayProgressTextBlock" Grid.Row="1" Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
+                    0 / 0
+                </TextBlock>
+
+                <ProgressBar Name="ProgressBarGamerPay" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0" Style="{StaticResource ProgressBarRegistros}" Foreground="{StaticResource GamerPayBrush}"/>
 
             </Grid>
         </Border>
@@ -112,31 +116,31 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="0" Style="{StaticResource ButtonStyleWithBorderRadius}" Name="BtnConsultarSteam">
+                <Button Grid.Row="0" Style="{StaticResource ButtonStyleWithBorderRadius}" Name="BtnConsultarSteam" Click="BtnConsultarSteam_Click">
                     <TextBlock Style="{StaticResource TitleTextBlockStyle}">
                         CONSULTAR PRECIO <Run Text="STEAM" Foreground="{StaticResource SteamBrush}"/>
                     </TextBlock>
                 </Button>
 
-                <Button Grid.Row="1" Style="{StaticResource ButtonStyleWithBorderRadius}" Name="BtnConsultarGamerPay">
+                <Button Grid.Row="1" Style="{StaticResource ButtonStyleWithBorderRadius}" Name="BtnConsultarGamerPay" Click="BtnConsultarGamerPay_Click">
                     <TextBlock Style="{StaticResource TitleTextBlockStyle}">
                         CONSULTAR PRECIO <Run Text="GAMERPAY" Foreground="{StaticResource GamerPayBrush}"/>
                     </TextBlock>
                 </Button>
 
-                <Button Grid.Row="2" Style="{StaticResource ButtonStyleWithBorderRadius}">
+                <Button Grid.Row="2" Style="{StaticResource ButtonStyleWithBorderRadius}" Name="BtnConsultarAmbos" Click="BtnConsultarAmbos_Click">
                     <TextBlock Style="{StaticResource TitleTextBlockStyle}">
                         <Run Text="CONSULTAR AMBOS PRECIOS" Foreground="{StaticResource PrimaryBrush}"/>
                     </TextBlock>
                 </Button>
                 
-                <Button Grid.Row="3" Style="{StaticResource ButtonStyleWithBorderRadius}">
+                <Button Grid.Row="3" Style="{StaticResource ButtonStyleWithBorderRadius}" Name="BtnConsultarHistorialRegistros" Click="BtnConsultarHistorialRegistros_Click">
                     <TextBlock Style="{StaticResource TitleTextBlockStyle}">
                         HISTORIAL DE REGISTROS
                     </TextBlock>
                 </Button>
                 
-                <Button Grid.Row="4" Style="{StaticResource ButtonStyleWithBorderRadius}">
+                <Button Grid.Row="4" Style="{StaticResource ButtonStyleWithBorderRadius}" Name="BtnExportarRegistrosJson" Click="BtnExportarRegistrosJson_Click">
                     <TextBlock Style="{StaticResource TitleTextBlockStyle}">
                         EXPORTAR REGISTROS A JSON
                     </TextBlock>

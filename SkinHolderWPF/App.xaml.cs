@@ -1,4 +1,5 @@
 ﻿using System.Windows.Media;
+using SkinHolderWPF.ViewModel;
 
 namespace SkinHolderWPF;
 
@@ -11,8 +12,7 @@ public partial class App
 
     public static string ExecutionPath = AppDomain.CurrentDomain.BaseDirectory;
 
-    public static string CurrentUsername = "";
-    public static string CurrentPassword = "";
+    public static UserViewModel CurrentUserViewModel = new() { UserName = "", Password = "" };
 
     public static bool SteamActivo;
     public static bool GamerPayActivo;
