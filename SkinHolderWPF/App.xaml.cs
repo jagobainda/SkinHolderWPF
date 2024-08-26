@@ -1,4 +1,5 @@
 ﻿using System.Windows.Media;
+using SkinHolderWPF.View;
 using SkinHolderWPF.ViewModel;
 
 namespace SkinHolderWPF;
@@ -17,4 +18,7 @@ public partial class App
     public static bool SteamActivo;
     public static bool GamerPayActivo;
     public static bool SkinHolderDbActivo;
+
+    // Acceso global a UserControls
+    public static RegistrosMenu? GlobalRegistrosMenu;
 }

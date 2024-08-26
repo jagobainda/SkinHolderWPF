@@ -16,4 +16,5 @@ public class ItemPrecioViewModel
     public required int Cantidad { get; set; }
     public required string SteamHashName { get; set; }
     public required string GamerPayNombre { get; set; }
+    public required bool Fallo { get; set; }
 }

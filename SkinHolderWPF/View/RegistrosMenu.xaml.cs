@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using System.Windows;
+using SkinHolderWPF.Enums;
 using SkinHolderWPF.Enums.Api;
+using SkinHolderWPF.Utils;
 using SkinHolderWPF.ViewModel;
 
 namespace SkinHolderWPF.View;
@@ -10,9 +12,9 @@ namespace SkinHolderWPF.View;
 /// </summary>
 public partial class RegistrosMenu
 {
-    public RegistroViewModel RegistroActualViewModel;
+    public RegistroViewModel RegistroActualViewModel = null!;
 
-    public List<ItemPrecioViewModel> ItemPrecioViewModelsList;
+    public List<ItemPrecioViewModel> ItemPrecioViewModelsList = null!;
 
     public RegistrosMenu()
     {
@@ -50,11 +52,37 @@ public partial class RegistrosMenu
         window.BtnItemsMenu.IsEnabled = estado;
         window.BtnUserProfile.IsEnabled = estado;
         window.BtnExit.IsEnabled = estado;
+
+        if (estado) RegistroActualViewModel.FechaHora = DateTime.Now;
     }
 
-    private void BtnConsultarSteam_Click(object sender, RoutedEventArgs e)
+    public void ActualizarProgresoSteam(int pingados)
     {
+        ProgressBarSteam.Value = pingados;
+    }
 
+    private async void BtnConsultarSteam_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CambiarEstadoBotones(false);
+
+            ResetearObjetosRegistro();
+
+            if (!await GenerarItemPrecios()) return;
+
+            _ = await GenerarRegistroSteam();
+        }
+        catch (Exception ex)
+        {
+            // TODO: log
+        }
+        finally
+        {
+            CambiarEstadoBotones(true);
+        }
+
+        RegistroActualViewModel.RegistroTypeId = ERegistroType.Steam.GetHashCode();
     }
 
     private async void BtnConsultarGamerPay_Click(object sender, RoutedEventArgs e)
@@ -77,6 +105,8 @@ public partial class RegistrosMenu
         {
             CambiarEstadoBotones(true);
         }
+
+        RegistroActualViewModel.RegistroTypeId = ERegistroType.GamerPay.GetHashCode();
     }
 
 
@@ -103,12 +133,16 @@ public partial class RegistrosMenu
         {
             CambiarEstadoBotones(true);
         }
+
+        RegistroActualViewModel.RegistroTypeId = ERegistroType.All.GetHashCode();
+
+        await GuardarRegistro();
     }
 
 
     private void BtnConsultarHistorialRegistros_Click(object sender, RoutedEventArgs e)
     {
-
+        MessageBox.Show("No disponible todavía");
     }
 
     private void BtnExportarRegistrosJson_Click(object sender, RoutedEventArgs e)
@@ -137,7 +171,8 @@ public partial class RegistrosMenu
             RegistroId = 0,
             Cantidad = userItem.GetProperty("cantidad").GetInt32(),
             SteamHashName = userItem.GetProperty("item").GetProperty("hashNameSteam").GetString()!,
-            GamerPayNombre = userItem.GetProperty("item").GetProperty("gamerPayNombre").GetString()!
+            GamerPayNombre = userItem.GetProperty("item").GetProperty("gamerPayNombre").GetString()!,
+            Fallo = false
         }).ToList();
 
         ItemPrecioViewModelsList.AddRange(itemPrecioViewModels);
@@ -184,6 +219,72 @@ public partial class RegistrosMenu
 
     public async Task<bool> GenerarRegistroSteam()
     {
+        var listApi = ItemPrecioViewModelsList
+            .Select(itemPrecioViewModel => itemPrecioViewModel.SteamHashName)
+            .Take(20)
+            .ToList();
+
+        var listResto = ItemPrecioViewModelsList
+            .Select(itemPrecioViewModel => itemPrecioViewModel.SteamHashName)
+            .Skip(20)
+            .ToList();
+
+        var itemPrecioDictionary = ItemPrecioViewModelsList.ToDictionary(it => it.SteamHashName);
+
+        #if DEBUG
+            var jsonPreciosApi = await ApiInfo.GetJsonFromPost(ApiInfo.BaseRegistrosUrl + ERegistrosApiMethods.GetPreciosSteam, listApi);
+
+            RespuestaPeticion[] arrayRespuestaPeticiones = [];
+            if (listResto is { Count: > 0 }) arrayRespuestaPeticiones = await SteamRequests.EjecutarPeticiones(listResto);
+        #elif RELEASE
+            var jsonPreciosApiTask = ApiInfo.GetJsonFromPost(ApiInfo.BaseRegistrosUrl + ERegistrosApiMethods.GetPreciosSteam, listApi);
+            var arrayRespuestaPeticionesTask = Task.FromResult(Array.Empty<RespuestaPeticion>());
+            
+            if (listResto is { Count: > 0 }) { arrayRespuestaPeticionesTask = SteamRequests.EjecutarPeticiones(listResto); }
+
+            await Task.WhenAll(jsonPreciosApiTask, arrayRespuestaPeticionesTask);
+
+            var jsonPreciosApi = await jsonPreciosApiTask;
+            var arrayRespuestaPeticiones = await arrayRespuestaPeticionesTask;
+        #endif
+
+        using var docPreciosSteam = JsonDocument.Parse(jsonPreciosApi);
+
+        var root = docPreciosSteam.RootElement.EnumerateArray();
+
+        foreach (var itemPrecioSteam in root)
+        {
+            var hashName = itemPrecioSteam.GetProperty("hashName").GetString();
+
+            if (!itemPrecioDictionary.TryGetValue(hashName!, out var item)) continue;
+
+            item.PrecioSteam = (float)itemPrecioSteam.GetProperty("precio").GetDouble();
+            item.Fallo = itemPrecioSteam.GetProperty("fallo").GetBoolean();
+        }
+
+        foreach (var respuestaPeticion in arrayRespuestaPeticiones)
+        {
+            if (!itemPrecioDictionary.TryGetValue(respuestaPeticion.HashName, out var item)) continue;
+
+            item.PrecioSteam = respuestaPeticion.Precio;
+            item.Fallo = respuestaPeticion.Fallo;
+        }
+
+        RegistroActualViewModel.TotalSteam = ItemPrecioViewModelsList.Sum(item => item.PrecioSteam * item.Cantidad);
+
+        SteamTotal.Text = RegistroActualViewModel.TotalSteam.ToString("F2");
+
         return true;
+    }
+
+    private async Task GuardarRegistro()
+    {
+        var registroIdString = await ApiInfo.GetJsonFromPost(ApiInfo.BaseRegistrosUrl + ERegistrosApiMethods.CreateRegistro, RegistroActualViewModel);
+
+        if (!int.TryParse(registroIdString, out var registroId)) return;
+
+        ItemPrecioViewModelsList.ForEach(itemPrecioViewModel => itemPrecioViewModel.RegistroId = registroId);
+
+        await ApiInfo.GetJsonFromPost(ApiInfo.BaseItemPrecioUrl + EItemsPrecioApiMethods.CreateItemPrecios, ItemPrecioViewModelsList);
     }
 }

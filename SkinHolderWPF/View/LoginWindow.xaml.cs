@@ -28,6 +28,7 @@ namespace SkinHolderWPF.View
 
         private void NuevoUsuarioButton_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("La aplicación sigue en desarrollo. Para acceder a la Alpha puedes contactarme a Discord: jagobainda#5551");
             // TODO: Hacer la lógica del register
         }
 

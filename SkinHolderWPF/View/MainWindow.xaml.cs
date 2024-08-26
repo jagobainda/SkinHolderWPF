@@ -31,6 +31,8 @@ public partial class MainWindow
     private void BtnRegistrosMenu_Click(object sender, RoutedEventArgs e)
     {
         ContenedorUserControl.Content = ContenedorUserControl.Content is RegistrosMenu ? new Bienvenida() : new RegistrosMenu();
+
+        App.GlobalRegistrosMenu = ContenedorUserControl.Content as RegistrosMenu;
     }
 
     private void BtnItemsMenu_Click(object sender, RoutedEventArgs e)
