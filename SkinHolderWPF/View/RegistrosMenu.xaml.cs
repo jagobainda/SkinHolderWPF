@@ -285,6 +285,10 @@ public partial class RegistrosMenu
 
         ItemPrecioViewModelsList.ForEach(itemPrecioViewModel => itemPrecioViewModel.RegistroId = registroId);
 
-        await ApiInfo.GetJsonFromPost(ApiInfo.BaseItemPrecioUrl + EItemsPrecioApiMethods.CreateItemPrecios, ItemPrecioViewModelsList);
+        var confirm = await ApiInfo.GetJsonFromPost(ApiInfo.BaseItemPrecioUrl + EItemsPrecioApiMethods.CreateItemPrecios, ItemPrecioViewModelsList);
+
+        if (confirm != "true" || Window.GetWindow(this) is not MainWindow window) return;
+
+        window.GetLastRegistroPrecioTotal();
     }
 }

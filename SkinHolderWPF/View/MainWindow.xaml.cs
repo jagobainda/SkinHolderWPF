@@ -104,7 +104,7 @@ public partial class MainWindow
         });
     }
 
-    private void GetLastRegistroPrecioTotal()
+    public void GetLastRegistroPrecioTotal()
     {
         Task.Run(async () =>
         {
