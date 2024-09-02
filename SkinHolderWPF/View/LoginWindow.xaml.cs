@@ -47,6 +47,8 @@ namespace SkinHolderWPF.View
             var jsonString = File.ReadAllText("last_username.json");
             var data = JsonSerializer.Deserialize<JsonElement>(jsonString);
             UsernameTextBox.Text = data.GetProperty("last_username").GetString()!;
+
+            PasswordTextBox.Focus();
         }
 
         private async void ProcesarInicioSesion()

@@ -16,6 +16,10 @@ public partial class RegistrosMenu
 
     public List<ItemPrecioViewModel> ItemPrecioViewModelsList = null!;
 
+    public int ContadorSteam;
+
+    public object Lock = new();
+
     public RegistrosMenu()
     {
         InitializeComponent();
@@ -36,6 +40,8 @@ public partial class RegistrosMenu
             UserId = 0,
             RegistroTypeId = 0
         };
+
+        lock (Lock) ContadorSteam = 0;
     }
 
     private void CambiarEstadoBotones(bool estado)
@@ -56,9 +62,11 @@ public partial class RegistrosMenu
         if (estado) RegistroActualViewModel.FechaHora = DateTime.Now;
     }
 
-    public void ActualizarProgresoSteam(int pingados)
+    public void ActualizarProgresoSteam()
     {
-        ProgressBarSteam.Value = pingados;
+        ProgressBarSteam.Value = ContadorSteam;
+
+        SteamProgress.Text = ContadorSteam.ToString();
     }
 
     private async void BtnConsultarSteam_Click(object sender, RoutedEventArgs e)
@@ -83,6 +91,8 @@ public partial class RegistrosMenu
         }
 
         RegistroActualViewModel.RegistroTypeId = ERegistroType.Steam.GetHashCode();
+
+        await GuardarRegistro();
     }
 
     private async void BtnConsultarGamerPay_Click(object sender, RoutedEventArgs e)
@@ -107,6 +117,8 @@ public partial class RegistrosMenu
         }
 
         RegistroActualViewModel.RegistroTypeId = ERegistroType.GamerPay.GetHashCode();
+
+        await GuardarRegistro();
     }
 
 
@@ -177,11 +189,17 @@ public partial class RegistrosMenu
 
         ItemPrecioViewModelsList.AddRange(itemPrecioViewModels);
 
+        ProgressBarSteam.Maximum = ItemPrecioViewModelsList.Count;
+        ProgressBarGamerPay.Maximum = ItemPrecioViewModelsList.Count;
+
         return true;
     }
 
     public async Task<bool> GenerarRegistroGamerPay()
     {
+        var totalItems = ItemPrecioViewModelsList.Count;
+        GamerPayTotalItems.Text = totalItems.ToString();
+
         var jsonPreciosGamerPay = await ApiInfo.GetJsonFromPost(ApiInfo.BaseRegistrosUrl + ERegistrosApiMethods.GetRegistroGamerPay, App.CurrentUserViewModel);
 
         using var docPreciosGamerPay = JsonDocument.Parse(jsonPreciosGamerPay);
@@ -209,9 +227,7 @@ public partial class RegistrosMenu
         GamerPayTotal.Text = RegistroActualViewModel.TotalGamerPay.ToString("F2");
         ItemsNoListados.Text = itemsNoListados.ToString();
 
-        var totalItems = ItemPrecioViewModelsList.Count;
-        ProgressBarGamerPay.Value = 100;
-        GamerPayProgressPercentage.Text = "100";
+        ProgressBarGamerPay.Value = totalItems;
         GamerPayProgressTextBlock.Text = $"{totalItems} / {totalItems}";
 
         return true;
@@ -219,6 +235,9 @@ public partial class RegistrosMenu
 
     public async Task<bool> GenerarRegistroSteam()
     {
+        var totalItems = ItemPrecioViewModelsList.Count;
+        SteamTotalItems.Text = totalItems.ToString();
+
         var listApi = ItemPrecioViewModelsList
             .Select(itemPrecioViewModel => itemPrecioViewModel.SteamHashName)
             .Take(20)
@@ -260,6 +279,10 @@ public partial class RegistrosMenu
 
             item.PrecioSteam = (float)itemPrecioSteam.GetProperty("precio").GetDouble();
             item.Fallo = itemPrecioSteam.GetProperty("fallo").GetBoolean();
+
+            lock (Lock) ContadorSteam++;
+            
+            ActualizarProgresoSteam();
         }
 
         foreach (var respuestaPeticion in arrayRespuestaPeticiones)
@@ -273,6 +296,10 @@ public partial class RegistrosMenu
         RegistroActualViewModel.TotalSteam = ItemPrecioViewModelsList.Sum(item => item.PrecioSteam * item.Cantidad);
 
         SteamTotal.Text = RegistroActualViewModel.TotalSteam.ToString("F2");
+
+        ItemsConWarning.Text = ItemPrecioViewModelsList.Count(ip => ip is { Fallo: true, PrecioSteam: > 0 }).ToString();
+
+        ItemsConError.Text = ItemPrecioViewModelsList.Count(ip => ip.PrecioSteam < 0).ToString();
 
         return true;
     }

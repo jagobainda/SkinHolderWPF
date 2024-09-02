@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="511" 
              d:DesignWidth="834"
@@ -57,11 +58,17 @@
                 </TextBlock>
                 
                 <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
-                    <Run Text="0" Name="SteamProgressPercentage"/> %
+                    <Button Name="RegistroGamerPayDetallesButton" Style="{StaticResource ButtonStyleWithBorderRadius}" Width="70" Height="50" IsEnabled="False">
+                        <fa:ImageAwesome Icon="Eye" Width="30" Height="30" Foreground="{StaticResource PrimaryBrush}"/>
+                    </Button>
                 </TextBlock>
-                
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="DarkRed" FontSize="20">
+                    ERRORES: <Run Text="0" Name="ItemsConWarning" Foreground="DarkOrange"/> | <Run Text="0" Name="ItemsConError"/>
+                </TextBlock>
+
                 <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
-                    <Run Text="0" Name="SteamProgress"/> / 0
+                    <Run Text="0" Name="SteamProgress"/> / <Run Text="0" Name="SteamTotalItems"/>
                 </TextBlock>
 
                 <ProgressBar Name="ProgressBarSteam" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0" Style="{StaticResource ProgressBarRegistros}" Foreground="{StaticResource SteamBrush}"/>
@@ -89,7 +96,9 @@
                 </TextBlock>
 
                 <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
-                    <Run Text="0" Name="GamerPayProgressPercentage"/> %
+                    <Button Name="RegistroSteamDetallesButton" Style="{StaticResource ButtonStyleWithBorderRadius}" Width="70" Height="50" IsEnabled="False">
+                        <fa:ImageAwesome Icon="Eye" Width="30" Height="30" Foreground="{StaticResource PrimaryBrush}"/>
+                    </Button>
                 </TextBlock>
                 
                 <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="DarkRed" FontSize="20">
@@ -97,7 +106,7 @@
                 </TextBlock>
 
                 <TextBlock Name="GamerPayProgressTextBlock" Grid.Row="1" Grid.Column="2" Style="{StaticResource TitleTextBlockStyle}" Foreground="WhiteSmoke" FontSize="20">
-                    0 / 0
+                    <Run Text="0" Name="GamerPayProgress"/> / <Run Text="0" Name="GamerPayTotalItems"/>
                 </TextBlock>
 
                 <ProgressBar Name="ProgressBarGamerPay" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0" Style="{StaticResource ProgressBarRegistros}" Foreground="{StaticResource GamerPayBrush}"/>

@@ -23,12 +23,18 @@ public static class SteamRequests
 
         foreach (var hashName in marketHashNames)
         {
-            var respuesta = await HacerPeticionAsync(country, currency, appId, hashName, true);
-            respuestas.Add(respuesta);
+            respuestas.Add(await HacerPeticionAsync(country, currency, appId, hashName, true));
 
             if (marketHashNames.Count > 20) await Task.Delay(3000);
 
-            //if (App.GlobalRegistrosMenu != null) App.GlobalRegistrosMenu.ActualizarProgresoSteam((int)respuesta.Precio);
+            if (App.GlobalRegistrosMenu == null) continue;
+            
+            lock (App.GlobalRegistrosMenu.Lock)
+            {
+                App.GlobalRegistrosMenu.ContadorSteam++;
+            }
+
+            App.GlobalRegistrosMenu.ActualizarProgresoSteam();
         }
 
         return respuestas.ToArray();
@@ -88,7 +94,7 @@ public static class SteamRequests
 
             var priceString = doc.RootElement.GetProperty("lowest_price").GetString()?
                 .Replace("-", "0")
-                .Replace("€", "");
+                .Replace("€", "") ?? string.Empty;
 
             return float.TryParse(priceString, out var price) ? price : -1f;
         }
